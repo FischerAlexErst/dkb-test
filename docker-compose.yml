@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - "5436:5432"
+    environment:
+      POSTGRES_DB: test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+  springapp:
+    build: .
+    container_name: test
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=container
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin
+
+    depends_on:
+      - db
+    links:
+      - db
+
