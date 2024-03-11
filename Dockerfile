@@ -1,6 +1,7 @@
 FROM openjdk:17-jdk-slim as build
 WORKDIR /app
 COPY . .
+RUN sed -i 's/\r$//' mvnw
 RUN chmod +x ./mvnw && ./mvnw clean package -Dmaven.test.skip
 
 FROM openjdk:17-jdk-slim
